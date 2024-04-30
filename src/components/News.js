@@ -7,11 +7,11 @@ export default class News extends Component {
     let data = Data.articles;
     return (
       <div className='container my-3'>
-        <div class="h4 pb-2 mb-5 text-primary border-2 border-bottom border-primary">
+        <div className="h4 pb-2 mb-5 text-primary border-2 border-bottom border-primary">
             News Headlines
         </div>
         {data.map((top) => {
-            return (<NewsItem img={top.urlToImage} title={top.title} description={top.description} publishedAt={top.publishedAt}/>);
+            return (<NewsItem key={top.source.id} img={top.urlToImage} title={top.title} description={top.description} publishedAt={top.publishedAt}/>);
 
         })}
 
