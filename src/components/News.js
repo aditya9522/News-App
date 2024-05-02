@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
 import NotFound from './NotFound';
-import data from './NewsData.json'
+// import data from './NewsData.json'
 
 export default class News extends Component {
   constructor() {
     super();
+    
     this.state = {
       articles: [],
       country: 'in',
       category: 'health',
-      query: 'mukesh ambani',
+      query: this.props.q,
     }
   }
 
@@ -27,19 +28,32 @@ export default class News extends Component {
   }
 
   fetchNews = () => {
-    // let { query, category, country } = this.state;
-    // fetch(`https://newsapi.org/v2/top-headlines?q=${query}country=${country}&category=${category}&apiKey=84acdcc8c563402aace1039a82971d96`).then(
-    //   (response) => response.json()).then((data) => {
-    //     if (data.status === 'ok') {
-    //       this.setState({ articles: data.articles});
-    //     } else {
-    //       console.log("Error occured!")
-    //       this.setState({articles: []})
-    //     }
-    //   });
+    let { category, country } = this.state;
+    // fetch(`https://newsapi.org/v2/everything?country=${country}&category=${category}&apiKey=0e85d94d34354893a73c6f941af45a44`).then(
+      (response) => response.json()).then((data) => {
+        if (data.status === 'ok') {
+          this.setState({ articles: data.articles});
+        } else {
+          console.log("Error occured!")
+          this.setState({articles: []})
+        }
+      });
 
-    this.setState({ articles: data.articles })
+    // console.log('started')
+    // this.setState({ articles: data.articles })
 
+  }
+
+  search = () => {
+    fetch(`https://newsapi.org/v2/everything?q=${this.state.query}&from=2024-05-01&to=2024-05-01&sortBy=popularity&apiKey=0e85d94d34354893a73c6f941af45a44`).then(
+      (response) => response.json()).then((data) => {
+        if (data.status === 'ok') {
+          this.setState({ articles: data.articles});
+        } else {
+          console.log("Error occured!")
+          this.setState({articles: []})
+        }
+      });
   }
 
   render() {
@@ -48,7 +62,7 @@ export default class News extends Component {
     return (
       <div className='container my-3'>
         <div className="d-flex justify-content-between border-2 border-bottom border-primary pb-2">
-            <div className="text-primary fw-semibold fs-4 mx-2">News - Top Headlines</div> 
+            <div className="text-primary fw-semibold fs-4 mx-2">Top News</div> 
             <div className="d-flex">
             <select className="form-select mx-2" id="category" defaultValue='Category' onChange={this.handleCategory}>
               <option disabled>Category</option>
@@ -72,11 +86,13 @@ export default class News extends Component {
             </select>
             </div>
         </div>
-        <div>
+        <div id='content'>
           {
             articles.length !== 0 ? articles.map((top,idx) => {
               if (top.urlToImage) {
                 return <NewsItem key={idx} imgPath={top.urlToImage} title={top.title} description={top.description} publishedAt={top.publishedAt} link={top.url} auther={top.author}/>
+              } else {
+                return null
               }
             }
             ) : <NotFound/>
