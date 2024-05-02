@@ -15,7 +15,7 @@ export default class App extends Component {
 
   scrolled = () => {
     const mybutton = document.getElementById("gotop");
-    if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
+    if (document.body.scrollTop > 120 || document.documentElement.scrollTop > 120) {
       mybutton.style.display = "block";
     } else {
       mybutton.style.display = "none";

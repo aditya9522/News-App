@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
 import NotFound from './NotFound';
+import data from './NewsData.json'
 
 export default class News extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       articles: [],
       country: 'in',
-      category: 'business'
+      category: 'health',
+      query: 'mukesh ambani',
     }
   }
 
@@ -17,28 +19,32 @@ export default class News extends Component {
   }
 
   handleCountry = (event) => {
-    this.setState({ country: event.target.value }, this.fetchNews())
+    this.setState({ country: event.target.value }, this.fetchNews)
   }
 
   handleCategory = (event) => {
-    this.setState({ category: event.target.value }, this.fetchNews())
+    this.setState({ category: event.target.value }, this.fetchNews)
   }
 
   fetchNews = () => {
-    let { category, country } = this.state;
-    fetch(`https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=0e85d94d34354893a73c6f941af45a44`).then(
-      (response) => response.json()).then((data) => {
-        this.setState({ articles: data.articles});
-      })
-      .catch(error => { 
-        console.log(error)
-        this.setState({articles: []})
-      });
+    // let { query, category, country } = this.state;
+    // fetch(`https://newsapi.org/v2/top-headlines?q=${query}country=${country}&category=${category}&apiKey=84acdcc8c563402aace1039a82971d96`).then(
+    //   (response) => response.json()).then((data) => {
+    //     if (data.status === 'ok') {
+    //       this.setState({ articles: data.articles});
+    //     } else {
+    //       console.log("Error occured!")
+    //       this.setState({articles: []})
+    //     }
+    //   });
+
+    this.setState({ articles: data.articles })
+
   }
 
   render() {
     const {articles} = this.state;
-    console.log(articles)
+
     return (
       <div className='container my-3'>
         <div className="d-flex justify-content-between border-2 border-bottom border-primary pb-2">
@@ -67,9 +73,14 @@ export default class News extends Component {
             </div>
         </div>
         <div>
-          {articles.length !== 0 ? articles.map((top,idx) =>
-            <NewsItem key={idx} imgPath={top.urlToImage} title={top.title} description={top.description} publishedAt={top.publishedAt} link={top.url} auther={top.author}/>
-          ) : <NotFound/>}
+          {
+            articles.length !== 0 ? articles.map((top,idx) => {
+              if (top.urlToImage) {
+                return <NewsItem key={idx} imgPath={top.urlToImage} title={top.title} description={top.description} publishedAt={top.publishedAt} link={top.url} auther={top.author}/>
+              }
+            }
+            ) : <NotFound/>
+          }
         </div>
       </div>
     )

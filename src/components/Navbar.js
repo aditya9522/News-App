@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 
 export default class Navbar extends Component {
+    constructor() {
+        super();
+        this.state = {
+            query: '' || ''
+        }
+    }
+    
     render() {
         return (
             <nav className="navbar navbar-expand-lg bg-dark-subtle">
@@ -22,8 +29,8 @@ export default class Navbar extends Component {
                             </li>
                         </ul>
                         <form className="d-flex" role="search">
-                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                                <button className="btn btn-outline-primary" type="submit">Search</button>
+                            <input className="form-control me-2" type="search" id='query' placeholder="Search" aria-label="Search" />
+                                <button className="btn btn-outline-primary" type="submit" onClick={this.handleSearch}>Search</button>
                         </form>
                     </div>
                 </div>
