@@ -3,9 +3,10 @@ import './App.css'
 import Navbar from './components/Navbar';
 import News from './components/News';
 import { GoArrowUp } from "react-icons/go";
+import Footer from './components/Footer';
 
 export default class App extends Component {
-  
+
   componentDidMount() {
     window.addEventListener('scroll', this.scrolled);
   }
@@ -32,8 +33,9 @@ export default class App extends Component {
     return (
       <div>
         <Navbar />
-        <div className='btn btn-primary fs-3 fw-bold' onClick={this.moveTop} id='gotop' title="Go to top" ><GoArrowUp /></div>
+        <div className='btn btn-primary fs-3 fw-bold border' onClick={this.moveTop} id='gotop' title="Go to top" ><GoArrowUp /></div>
         <News />
+        <Footer/>
       </div>
     );
   }

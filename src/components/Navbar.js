@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 
 export default class Navbar extends Component {
-    constructor(props) {
-        super(props);
-    }
+    // state = {
+    //     query: '',
+    // }
 
     componentDidMount() {
-        let colors = ['red', 'green', 'blue', 'orange', 'pink', 'yellow', 'black', 'cyan', 'purple', 'gray', 'white', ]
+        let colors = ['red', 'green', 'blue', 'orange', 'pink', 'yellow', 'cyan', 'purple', 'gray', 'white', ]
         let element = document.querySelector('#magic');
         let i = 0
         setInterval(() => {
@@ -17,6 +17,11 @@ export default class Navbar extends Component {
             i ++
         }, 1000);
     }
+
+    // handleInput = (event) => {
+    //     let value = event.target.value;
+    //     this.setState({query: value})        
+    // }
 
     render() {
         return (
@@ -38,11 +43,11 @@ export default class Navbar extends Component {
                                 <a className="nav-link"  href="#">Contact</a>
                             </li>
                         </ul>
-                        {/* <form className="d-flex" role="search">
-                            <input className="form-control me-2" type="search" id='query' placeholder="Search" aria-label="Search"/>
-                            <button className="btn btn-outline-primary" type='submit'>Search</button>
-                        </form> */}
-                        <p id='magic' className='mb-1 fw-medium fs-5'>Read News(free)</p>
+                        <a id='magic' className='mb-0 fw-medium fs-5 mx-2 text-decoration-none' href="https://play.google.com/store/search?q=mynewsapp&c=apps&hl=en_IN&gl=US" target="_blank" rel="noopener noreferrer">Get daily news</a>
+                        {/* <div className="d-flex">
+                            <input className="form-control me-2" type="search" id='query' placeholder="Search" aria-label="Search" onChange={this.handleInput}/>
+                            <button className="btn btn-outline-primary" onClick={this.props.send(this.state.query)}>Search</button>
+                        </div> */}
                     </div>
                 </div>
             </nav>
