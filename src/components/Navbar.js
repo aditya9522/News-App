@@ -3,19 +3,20 @@ import React, { Component } from 'react'
 export default class Navbar extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            query: ''
-        };
     }
 
-    handleSearch = () => {
-        const { query } = this.state;
-        this.props.onSearch(query);
-    };
-
-    handleInputChange = (event) => {
-        this.setState({ query: event.target.value });
-    };
+    componentDidMount() {
+        let colors = ['red', 'green', 'blue', 'orange', 'pink', 'yellow', 'black', 'cyan', 'purple', 'gray', 'white', ]
+        let element = document.querySelector('#magic');
+        let i = 0
+        setInterval(() => {
+            if (i > colors.length - 1){
+                i = 0
+            }
+            element.style.color = colors[i];
+            i ++
+        }, 1000);
+    }
 
     render() {
         return (
@@ -37,10 +38,11 @@ export default class Navbar extends Component {
                                 <a className="nav-link"  href="#">Contact</a>
                             </li>
                         </ul>
-                        <form className="d-flex" role="search">
-                            <input className="form-control me-2" type="search" id='query' placeholder="Search" aria-label="Search" onChange={this.handleInputChange} />
-                            <button className="btn btn-outline-primary" onClick={this.handleSearch}>Search</button>
-                        </form>
+                        {/* <form className="d-flex" role="search">
+                            <input className="form-control me-2" type="search" id='query' placeholder="Search" aria-label="Search"/>
+                            <button className="btn btn-outline-primary" type='submit'>Search</button>
+                        </form> */}
+                        <p id='magic' className='mb-1 fw-medium fs-5'>Read News(free)</p>
                     </div>
                 </div>
             </nav>

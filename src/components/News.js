@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
 import NotFound from './NotFound';
-// import data from './NewsData.json'
+import data from './NewsData.json'
 
 export default class News extends Component {
   constructor() {
@@ -11,7 +11,6 @@ export default class News extends Component {
       articles: [],
       country: 'in',
       category: 'health',
-      query: this.props.q,
     }
   }
 
@@ -28,33 +27,33 @@ export default class News extends Component {
   }
 
   fetchNews = () => {
-    let { category, country } = this.state;
-    // fetch(`https://newsapi.org/v2/everything?country=${country}&category=${category}&apiKey=0e85d94d34354893a73c6f941af45a44`).then(
-      (response) => response.json()).then((data) => {
-        if (data.status === 'ok') {
-          this.setState({ articles: data.articles});
-        } else {
-          console.log("Error occured!")
-          this.setState({articles: []})
-        }
-      });
+    // let { category, country } = this.state;
+    // // fetch(`https://newsapi.org/v2/everything?country=${country}&category=${category}&apiKey=0e85d94d34354893a73c6f941af45a44`).then(
+    //   (response) => response.json()).then((data) => {
+    //     if (data.status === 'ok') {
+    //       this.setState({ articles: data.articles});
+    //     } else {
+    //       console.log("Error occured!")
+    //       this.setState({articles: []})
+    //     }
+    //   });
 
-    // console.log('started')
-    // this.setState({ articles: data.articles })
+    console.log('started')
+    this.setState({ articles: data.articles })
 
   }
 
-  search = () => {
-    fetch(`https://newsapi.org/v2/everything?q=${this.state.query}&from=2024-05-01&to=2024-05-01&sortBy=popularity&apiKey=0e85d94d34354893a73c6f941af45a44`).then(
-      (response) => response.json()).then((data) => {
-        if (data.status === 'ok') {
-          this.setState({ articles: data.articles});
-        } else {
-          console.log("Error occured!")
-          this.setState({articles: []})
-        }
-      });
-  }
+  // search = () => {
+  //   fetch(`https://newsapi.org/v2/everything?q=${this.state.query}&from=2024-05-01&to=2024-05-01&sortBy=popularity&apiKey=0e85d94d34354893a73c6f941af45a44`).then(
+  //     (response) => response.json()).then((data) => {
+  //       if (data.status === 'ok') {
+  //         this.setState({ articles: data.articles});
+  //       } else {
+  //         console.log("Error occured!")
+  //         this.setState({articles: []})
+  //       }
+  //     });
+  // }
 
   render() {
     const {articles} = this.state;
