@@ -33,16 +33,18 @@ export default class News extends Component {
     this.setState({ category: event.target.value }, this.fetchNews)
   }
 
+  // API Key : 0e85d94d34354893a73c6f941af45a44 
+  
   fetchNews = async () => {
     this.setState({ loading: true });
     let { category, country, page, pageSize} = this.state;
-    await fetch(`https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=0e85d94d34354893a73c6f941af45a44&page=${page}&pageSize=${pageSize}`).then(
+    await fetch(`https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=84acdcc8c563402aace1039a82971d96&page=${page}&pageSize=${pageSize}`).then(
       (response) => response.json()).then((data) => {
         if (data.status === 'ok') {
           this.setState({ articles: data.articles, totalResults: data.totalResults, loading: false});
         } else {
           console.log("Error occured!")
-          this.setState({articles: []})
+          this.setState({articles: [], loading: false})
         }
       });
 
@@ -50,19 +52,6 @@ export default class News extends Component {
     // this.setState({ articles: data.articles })
 
   }
-
-  // search = () => {
-  //   console.log(this.props.query);
-  //   fetch(`https://newsapi.org/v2/everything?q=${this.state.query}&from=2024-05-01&to=2024-05-01&sortBy=popularity&apiKey=0e85d94d34354893a73c6f941af45a44`).then(
-  //     (response) => response.json()).then((data) => {
-  //       if (data.status === 'ok') {
-  //         this.setState({ articles: data.articles});
-  //       } else {
-  //         console.log("Error occured!")
-  //         this.setState({articles: []})
-  //       }
-  //     });
-  // }
 
   handlePrevious = () => {
     this.setState({ page: this.state.page - 1 });
@@ -79,8 +68,8 @@ export default class News extends Component {
 
     return (
       <div className='container my-3'>
-        <div className="d-flex justify-content-between border-2 border-bottom border-primary pb-2">
-          <div className="text-primary fw-medium fs-4 mx-2">News</div>
+        <div className="d-flex justify-content-between border-2 border-bottom border-primary pb-2 fs-5">
+          <div className="text-primary fw-medium fs-4 mx-2">{this.state.category[0].toUpperCase() + this.state.category.slice(1)} News</div>
           <div className="d-flex">
             <select className="form-select mx-2" id="category" defaultValue='Category' onChange={this.handleCategory}>
               <option disabled>Category</option>
@@ -88,7 +77,7 @@ export default class News extends Component {
               <option value="business">Business</option>
               <option value="science">Science</option>
               <option value="general">General</option>
-              <option value=" health"> Health</option>
+              <option value="health"> Health</option>
               <option value="technology">Technology</option>
               <option value="sports">Sports</option>
             </select>
@@ -109,19 +98,14 @@ export default class News extends Component {
         <div className="container text-center h3 mt-4 text-primary">Read Top Headlines</div>
         <div id='content'>
           {
-            articles.length !== 0 ? !this.state.loading ? articles.map((top, idx) => {
-              if (top.urlToImage) {
-                return <NewsItem key={idx} imgPath={top.urlToImage} title={top.title} description={top.description} publishedAt={top.publishedAt} link={top.url} auther={top.author} />
-              } else {
-                return null
-              }
-            }
-            ) : <Loader/> : <NotFound />
+            !this.state.loading ? articles.length !== 0 ?  articles.map((top, idx) => 
+              <NewsItem key={idx} imgPath={top.urlToImage} title={top.title} description={top.description} publishedAt={top.publishedAt} link={top.url} author={top.author} />
+            ) : <NotFound /> : <Loader/>
           }
           {this.state.totalResults.length === 0 ? '' : <div className="d-flex justify-content-between my-3">
             <button className="btn btn-primary pt-0 pb-0 fs-5" onClick={this.handlePrevious} disabled={this.state.page <= 1}><TiArrowBack /> Previous</button>
-            <p className='fs-5'>{this.state.page <= 1 ? '':'< '} Page {this.state.page} {this.state.page > Math.ceil(this.state.totalResults/this.state.pageSize) ? '' : ' >'}</p>
-            <button className="btn btn-primary pt-0 pb-0 fs-5" onClick={this.handleNext} disabled={this.state.page > Math.ceil(this.state.totalResults/this.state.pageSize)}>Next <TiArrowForward /></button>
+            <p className='fs-5'>{this.state.page <= 1 ? '':'< '} Page {this.state.page} {this.state.page >= Math.ceil(this.state.totalResults/this.state.pageSize) ? '' : ' >'}</p>
+            <button className="btn btn-primary pt-0 pb-0 fs-5" onClick={this.handleNext} disabled={this.state.page >= Math.ceil(this.state.totalResults/this.state.pageSize)}>Next <TiArrowForward /></button>
           </div>}
         </div>
       </div>

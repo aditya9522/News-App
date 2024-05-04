@@ -6,7 +6,7 @@ export default class Navbar extends Component {
     // }
 
     componentDidMount() {
-        let colors = ['red', 'green', 'blue', 'orange', 'pink', 'yellow', 'cyan', 'purple', 'gray', 'white', ]
+        let colors = ['blue', 'yellow']   //, 'blue', 'orange', 'pink', 'yellow', 'cyan', 'purple', 'gray', 'white', 
         let element = document.querySelector('#magic');
         let i = 0
         setInterval(() => {
@@ -15,7 +15,7 @@ export default class Navbar extends Component {
             }
             element.style.color = colors[i];
             i ++
-        }, 1000);
+        }, 500);
     }
 
     // handleInput = (event) => {
@@ -36,12 +36,12 @@ export default class Navbar extends Component {
                             <li className="nav-item">
                                 <a className="nav-link active" aria-current="page" href="#">Home</a>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">About</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link"  href="#">Contact</a>
-                            </li>
+                                {/* <li className="nav-item">
+                                    <a className="nav-link" href="#">About</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link"  href="#">Contact</a>
+                                </li> */}
                         </ul>
                         <a id='magic' className='mb-0 fw-medium fs-5 mx-2 text-decoration-none' href="https://play.google.com/store/search?q=mynewsapp&c=apps&hl=en_IN&gl=US" target="_blank" rel="noopener noreferrer">Get daily news</a>
                         {/* <div className="d-flex">
